@@ -16,6 +16,13 @@ export class CourseService {
   }
   //creating a course
   createCourse(CreateCourseDto: CreateCourseDto): Course {
+    if (
+      CreateCourseDto.code.length === 0 ||
+      CreateCourseDto.name.length === 0 ||
+      CreateCourseDto.term.length === 0
+    ) {
+      return;
+    }
     const course = { id: Date.now(), ...CreateCourseDto };
     this.courses.push(course);
     return course;

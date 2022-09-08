@@ -1,4 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotAcceptableException,
+  Post,
+} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { Course } from './entities/user.entity';
@@ -19,6 +25,10 @@ export class CourseController {
   //creating new course
   @Post()
   createCourse(@Body() body: CreateCourseDto): Course {
-    return this.courseService.createCourse(body);
+    const course = this.courseService.createCourse(body);
+    if (!course) {
+      throw new NotAcceptableException();
+    }
+    return course;
   }
 }
